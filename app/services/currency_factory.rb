@@ -1,15 +1,15 @@
 class CurrencyFactory
 
-  Currency = Struct.new(:code, :name, :rate)
-
   def self.build(json)
-    json.map { | code, rate | for_currency(code, rate) }
+    json.map { | code, rate | for_currency(code, rate) }.compact
   end
 
   private
 
   def self.for_currency(code, rate)
-    Currency.new(code, countries[code.downcase]['name'], rate)
+    if codeData = countries[code.downcase]
+      Currency.new(code, codeData['name'], rate)
+    end
   end
 
   def self.countries

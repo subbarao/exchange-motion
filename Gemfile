@@ -5,7 +5,7 @@ gem 'rake'
 gem "webstub", "~> 0.3.0"
 gem 'bubble-wrap'
 gem 'motion-fixtures'
-gem 'guard', '~> 1.4.0'
+gem 'guard', '= 1.4.0'
 gem 'listen'
 gem 'rb-fsevent', '~> 0.9.1'
 gem 'guard-motion'

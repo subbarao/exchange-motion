@@ -1,21 +1,21 @@
 describe "Currency Factory" do
   before do
-    @results = CurrencyFactory.build({ 'INR' => 53.45 , 'EUR' => 0.9 })
-  end
+    content = NSString.stringWithContentsOfFile("#{App.documents_path}/open.json",
+                                                encoding:NSUTF8StringEncoding,
+                                                error:nil)
 
-  it "instances length" do
-    @results.length.should == 2
+    @results = CurrencyFactory.build(content.objectFromJSONString['rates'])
   end
 
   it "euro" do
     eur = @results.detect { |r| r.code == 'EUR' }
-    eur.rate.should == 0.9
+    eur.rate.should == 0.771151
     eur.name.should == "Euro"
   end
 
   it "indian rupee" do
     inr = @results.detect { |r| r.code == 'INR' }
-    inr.rate.should == 53.45
+    inr.rate.should == 53.607928
     inr.name.should == "Indian Rupee"
   end
 end
