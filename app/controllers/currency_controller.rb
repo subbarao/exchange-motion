@@ -18,9 +18,15 @@ class CurrencyController < PullRefreshTableViewController
 
   def searchBarSearchButtonClicked(searchBar)
     @results = @filter.search(searchBar.text)
-
-    self.view.reloadData
     searchBar.setShowsCancelButton(true, animated:true)
+    view.reloadData
+  end
+
+  def searchBarCancelButtonClicked(searchBar)
+    @results = @filter.search
+    searchBar.text = nil
+    searchBar.setShowsCancelButton(false, animated:true)
+    view.reloadData
   end
 
   def refresh

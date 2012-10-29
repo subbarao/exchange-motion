@@ -1,5 +1,6 @@
 class CurrencyFilter
   def initialize(args = nil)
+    args ||= []
     @elements = args.sort_by(&:name)
   end
 

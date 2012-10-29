@@ -14,7 +14,9 @@ describe "OpenExchangeClient" do
   it "return rate json" do
     @result = nil
 
-    OpenExchangeClient.latest { | r | @result = r } 
+    OpenExchangeClient.latest do | response | 
+      @result = response
+    end
 
     wait 2.0 do
       @result.should == @json['rates']

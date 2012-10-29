@@ -7,8 +7,8 @@ class CurrencyQuerier
     NSKeyedUnarchiver.unarchiveObjectWithFile(current_path || path)
   end
 
-  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory)
-    client.latest { | r | yield builder.build(r)  }
+  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory, &blk)
+    client.latest { | r | blk.call(builder.build(r))  }
   end
 
   private

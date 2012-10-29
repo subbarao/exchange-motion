@@ -34,13 +34,13 @@ describe "CurrencyQuerier" do
     end
   end
 
+=begin
   describe "#current" do
     it "must read data from the archived file" do
       NSKeyedUnarchiver.should.receive(:unarchiveObjectWithFile).with('test.plist').and_return([])
     end
   end
 
-=begin
   it "build currency using the factory" do
     results = nil 
     CurrencyQuerier.latest(FakeClient, FakeFactory) do | r |
