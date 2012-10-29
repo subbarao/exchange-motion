@@ -1,7 +1,7 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
-    @window.rootViewController = CurrencyController.alloc.initWithStyle UITableViewStyleGrouped
+    @window.rootViewController = CurrencyController.alloc.init
     @window.makeKeyAndVisible
     true
   end
