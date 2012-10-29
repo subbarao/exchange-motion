@@ -20,4 +20,8 @@ class Currency
     coder.encodeDouble(rate, forKey:"rate")
     coder.encodeObject(code, forKey:"code")
   end
+
+  def match?(regex)
+    regex.match(name) || regex.match(code)
+  end
 end

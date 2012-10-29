@@ -1,10 +1,10 @@
 describe "CurrencyController" do
  tests CurrencyController
 
-  it "have refresh icon" do
-    CurrencyQuerier.mock!(:latest, return: [])
-    tap 'Refresh'
+  it "clicking on Refresh" do
+    @results = nil
+    drag ('Refresh!', from: CGPoint.new(10, 0), to: CGPoint.new(10, 100))
 
-    controller.instance_variable_get('@results').should.be.empty
+    @results.should.be.nil
   end
 end

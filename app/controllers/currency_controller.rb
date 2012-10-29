@@ -2,24 +2,30 @@ class CurrencyController < PullRefreshTableViewController
 
   def viewDidLoad
     super
-    @all_results = @results = CurrencyQuerier.current || []
-    self.view.dataSource = self.view.delegate = self
+    initialize_currencies CurrencyQuerier.current
+    view.dataSource = view.delegate = self
+    add_search_bar
+  end
+
+  def add_search_bar
     searchbar = UISearchBar.alloc.initWithFrame(CGRectMake(33, 33, 264, 31))
     searchbar.delegate = self
-    self.view.addSubview(searchbar)
-    self.tableView.tableHeaderView = searchbar
+    searchbar.accessibilityLabel = "Refresh!"
+
+    view.addSubview(searchbar)
+    tableView.tableHeaderView = searchbar
   end
 
   def searchBarSearchButtonClicked(searchBar)
-    regex = Regexp.new(searchBar.text, /i/)
-    @results = @all_results.select {|r| regex.match(r.name) }
+    @results = @filter.search(searchBar.text)
+
     self.view.reloadData
     searchBar.setShowsCancelButton(true, animated:true)
   end
 
   def refresh
     CurrencyQuerier.latest do | r | 
-      @all_results = @results = r
+      initialize_currencies r
       self.stopLoading
       self.view.reloadData
     end
@@ -37,5 +43,10 @@ class CurrencyController < PullRefreshTableViewController
     cell.textLabel.text = "#{currency.name} (#{currency.code})"
     cell.detailTextLabel.text = "#{currency.rate}"
     cell
+  end
+
+  def initialize_currencies(currencies)
+    @filter = CurrencyFilter.new(currencies)
+    @results = @filter.search
   end
 end

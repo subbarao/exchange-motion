@@ -1,15 +1,14 @@
 class CurrencyQuerier
   @@default_path = 'currencies.plist'
+
   def self.current(current_path = nil)
+    NSLog(path)
+    
     NSKeyedUnarchiver.unarchiveObjectWithFile(current_path || path)
   end
 
-  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory, &blk)
-    client.latest do | r | 
-      currencies = builder.build(r)
-      blk.call(currencies)
-      save(currencies)
-    end
+  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory)
+    client.latest { | r | yield builder.build(r)  }
   end
 
   private

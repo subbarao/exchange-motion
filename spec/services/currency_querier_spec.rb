@@ -1,27 +1,48 @@
 class FakeClient
-  def self.counter
-    @counter
-  end
-
   def self.latest
-    @counter ||= 0
-    @counter += 1
-    yield NSString.stringWithContentsOfFile("#{App.documents_path}/open.json",
-                                            encoding:NSUTF8StringEncoding,
-                                            error:nil).objectFromJSONString
+    yield([])
   end
 end
 
 class FakeFactory
   def self.build(json)
-    [ Currency.new('USD', 'US Dollar', 1.23) ]
+    %w(results)
   end
 end
 
 describe "CurrencyQuerier" do
+
+  describe "#latest" do
+    it "executes block" do 
+      @called = false
+
+      CurrencyQuerier.latest(FakeClient, FakeFactory) do 
+        @called = true
+      end
+
+      @called.should.be.true
+    end
+
+    it "with builder results" do 
+      @results = nil
+
+      CurrencyQuerier.latest(FakeClient, FakeFactory) do | r | 
+        @results = r
+      end
+
+      @results.should == %w(results)
+    end
+  end
+
+  describe "#current" do
+    it "must read data from the archived file" do
+      NSKeyedUnarchiver.should.receive(:unarchiveObjectWithFile).with('test.plist').and_return([])
+    end
+  end
+
+=begin
   it "build currency using the factory" do
     results = nil 
-
     CurrencyQuerier.latest(FakeClient, FakeFactory) do | r |
       results = r
     end
@@ -61,4 +82,5 @@ describe "CurrencyQuerier" do
     first.code.should == "USD"
     first.rate.should == 12.33
   end
+=end
 end
