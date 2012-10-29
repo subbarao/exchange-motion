@@ -5,7 +5,6 @@ class CurrencyController < UITableViewController
     initRefreshButton
     self.view.dataSource = self.view.delegate = self
     @results = CurrencyQuerier.current || []
-    #refreshInfo
   end
 
   def initRefreshButton
@@ -24,7 +23,7 @@ class CurrencyController < UITableViewController
   def refreshInfo
     CurrencyQuerier.latest do | r | 
       @results = r
-      self.tableView.reloadData
+      self.view.reloadData
     end
   end
 

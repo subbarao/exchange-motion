@@ -6,11 +6,11 @@ class CurrencyQuerier
     NSKeyedUnarchiver.unarchiveObjectWithFile(current_path || path)
   end
 
-  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory)
+  def self.latest(client = OpenExchangeClient, builder = CurrencyFactory, &blk)
     client.latest do | r | 
       currencies = builder.build(r)
+      blk.call(currencies)
       save(currencies)
-      yield(currencies) if block_given?
     end
   end
 
