@@ -1,11 +1,14 @@
 
 PODS:
 - JSONKit (1.5pre)
+- PullToRefresh (0.0.1)
 
 DEPENDENCIES:
 - JSONKit
+- PullToRefresh
 
 SPEC CHECKSUMS:
   JSONKit: a01a22c75f27eae76b4badd55a91c20fe6e86477
+  PullToRefresh: 6cc6f9dc1289564b261a2ed1358eae952d91759b
 
 COCOAPODS: 0.15.2

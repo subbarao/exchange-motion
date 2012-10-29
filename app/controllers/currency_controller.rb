@@ -1,28 +1,15 @@
-class CurrencyController < UITableViewController
+class CurrencyController < PullRefreshTableViewController
 
   def viewDidLoad
     super
-    initRefreshButton
     self.view.dataSource = self.view.delegate = self
     @results = CurrencyQuerier.current || []
   end
 
-  def initRefreshButton
-    toolBar = UIToolbar.alloc.initWithFrame(CGRectMake(0, 0 , 320 , 40))
-
-    barButton = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemRefresh, 
-                                                                  target:self, 
-                                                                  action:'refreshInfo')
-    barButton.accessibilityLabel = "Refresh"
-
-    toolBar.setItems([barButton],animated:false)
-
-    self.view.addSubview(toolBar)
-  end
-
-  def refreshInfo
+  def refresh
     CurrencyQuerier.latest do | r | 
       @results = r
+      self.stopLoading
       self.view.reloadData
     end
   end

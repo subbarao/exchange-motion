@@ -1,8 +1,6 @@
 class CurrencyQuerier
   @@default_path = 'currencies.plist'
-
   def self.current(current_path = nil)
-    NSLog(path)
     NSKeyedUnarchiver.unarchiveObjectWithFile(current_path || path)
   end
 
