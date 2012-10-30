@@ -1,5 +1,4 @@
 class CurrencyController < PullRefreshTableViewController
-
   def viewDidLoad
     super
     initialize_currencies CurrencyQuerier.current
@@ -30,10 +29,11 @@ class CurrencyController < PullRefreshTableViewController
   end
 
   def refresh
-    CurrencyQuerier.latest do | r | 
-      initialize_currencies r
-      self.stopLoading
-      self.view.reloadData
+    CurrencyQuerier.latest do | currencies | 
+      initialize_currencies(currencies)
+      CurrencyQuerier.archive(currencies)
+      stopLoading
+      view.reloadData
     end
   end
 
@@ -41,11 +41,14 @@ class CurrencyController < PullRefreshTableViewController
     @results.length
   end
 
-
   CellID = 'CellIdentifier'
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
-    cell = tableView.dequeueReusableCellWithIdentifier(CellID) || UITableViewCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier:CellID)
+    unless cell = tableView.dequeueReusableCellWithIdentifier(CellID)
+      cell =  UITableViewCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier:CellID)
+    end
+
     currency = @results[indexPath.row]
+
     cell.textLabel.text = "#{currency.name} (#{currency.code})"
     cell.detailTextLabel.text = "#{currency.rate}"
     cell

@@ -1,4 +1,5 @@
 class Currency
+
   attr_reader :code, :name, :rate
 
   def initialize(code, name, rate)
@@ -23,5 +24,13 @@ class Currency
 
   def match?(regex)
     regex.match(name) || regex.match(code)
+  end
+
+  def label
+    "#{@name} (#{@code})"
+  end
+
+  def ==(obj)
+    @name == obj.name && @code == obj.code || @rate == obj.code
   end
 end
