@@ -12,4 +12,6 @@ gem 'rb-fsevent', '~> 0.9.1'
 gem 'guard-motion'
 gem 'motion-cocoapods'
 gem 'sugarcube'
+gem 'cucumber'
+gem 'frank-cucumber', :require => false
 gem 'terminal-notifier-guard'
