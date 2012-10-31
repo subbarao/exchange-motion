@@ -14,4 +14,5 @@ gem 'motion-cocoapods'
 gem 'sugarcube'
 gem 'cucumber'
 gem 'frank-cucumber', :require => false
+gem 'guard-cucumber', '= 0.8.0'
 gem 'terminal-notifier-guard'

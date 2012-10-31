@@ -9,7 +9,7 @@ class CurrencyController < PullRefreshTableViewController
   def add_search_bar
     searchbar = UISearchBar.alloc.initWithFrame(CGRectMake(33, 33, 264, 31))
     searchbar.delegate = self
-    searchbar.accessibilityLabel = "Refresh!"
+    searchbar.accessibilityLabel = "Search"
 
     view.addSubview(searchbar)
     tableView.tableHeaderView = searchbar
